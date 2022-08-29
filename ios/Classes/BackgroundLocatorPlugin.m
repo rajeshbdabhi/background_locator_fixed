@@ -79,9 +79,10 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 }
 
 -(void)applicationWillTerminate:(UIApplication *)application {
-    [self observeRegionForLocation:_lastLocation];
     if([PreferencesManager isStopWithTerminate]){
         [self removeLocator];
+    } else{
+        [self observeRegionForLocation:_lastLocation];
     }
 }
 
