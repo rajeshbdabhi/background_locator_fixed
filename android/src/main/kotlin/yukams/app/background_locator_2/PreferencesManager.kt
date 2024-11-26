@@ -1,13 +1,13 @@
-package yukams.app.package:background_locator_2
+package yukams.app.background_locator_2
 
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import yukams.app.package:background_locator_2.provider.LocationClient
+import yukams.app.background_locator_2.provider.LocationClient
 
 class PreferencesManager {
     companion object {
-        private const val PREF_NAME = "package:background_locator_2"
+        private const val PREF_NAME = "background_locator_2"
 
         @JvmStatic
         fun saveCallbackDispatcher(context: Context, map: Map<Any, Any>) {
@@ -25,9 +25,10 @@ class PreferencesManager {
             val sharedPreferences =
                     context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
+            val callback = map[Keys.ARG_CALLBACK] as Number
             sharedPreferences.edit()
                     .putLong(Keys.ARG_CALLBACK,
-                            map[Keys.ARG_CALLBACK] as Long)
+                            callback.toLong())
                     .apply()
 
             if (map[Keys.ARG_NOTIFICATION_CALLBACK] as? Long != null) {

@@ -55,14 +55,15 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
-  Future<void> updateUI(LocationDto data) async {
+  Future<void> updateUI(dynamic data) async {
     final log = await FileManager.readLogFile();
 
-    await _updateNotificationText(data);
+    LocationDto locationDto = (data != null) ? LocationDto.fromJson(data) : null;
+    await _updateNotificationText(locationDto);
 
     setState(() {
       if (data != null) {
-        lastLocation = data;
+        lastLocation = locationDto;
       }
       logStr = log;
     });
@@ -209,7 +210,10 @@ class _MyAppState extends State<MyApp> {
         initDataCallback: data,
         disposeCallback: LocationCallbackHandler.disposeCallback,
         iosSettings: IOSSettings(
-            accuracy: LocationAccuracy.NAVIGATION, distanceFilter: 0),
+            accuracy: LocationAccuracy.NAVIGATION,
+            distanceFilter: 0,
+            stopWithTerminate: true
+        ),
         autoStop: false,
         androidSettings: AndroidSettings(
             accuracy: LocationAccuracy.NAVIGATION,
